@@ -1,0 +1,7 @@
+{
+  "name": "ordoo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
