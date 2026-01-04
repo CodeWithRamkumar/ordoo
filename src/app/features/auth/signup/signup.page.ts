@@ -80,41 +80,15 @@ export class SignupPage implements OnInit {
     }
 
     console.log('Making API call to:', this.config.AUTH.SIGNUP, 'with data:', signupData);
-    await this.loader.show('Creating account...');
     
-    this.http.post(this.config.AUTH.SIGNUP, signupData)
-      .subscribe({
-        next: async (response: any) => {
-          console.log('Signup success:', response);
-          await this.authService.saveUserData(response);
-          await this.loader.hide();
-          this.navCtrl.navigateRoot('/auth/profile-setup');
-        },
-        error: async (error) => {
-          console.log('Signup error:', error);
-          await this.loader.hide();
-          console.log('Signup error:', error);
-          console.log('Error status:', error.status);
-          if (ssoData) {
-            // Show toast for SSO errors
-            if (error.status === 409) {
-              const toast = await this.toastController.create({
-                message: 'Email already exists. Please try logging in instead.',
-                duration: 3000,
-                color: 'danger',
-                position: 'top'
-              });
-              await toast.present();
-            }
-          } else {
-            // Show form errors for regular signup
-            if (error.status === 409) {
-              this.emailExists = true;
-              this.signupForm.get('email')?.setErrors({ serverError: true });
-            }
-          }
-        }
-      });
+    try {
+      const response = await this.http.post(this.config.AUTH.SIGNUP, signupData).toPromise();
+      console.log('Signup success:', response);
+      // await this.authService.saveUserData(response);
+      this.navCtrl.navigateRoot('/auth/profile-setup');
+    } catch (error) {
+      console.log('Signup error:', error);
+    }
   }
 
   navigateToLogin() {
