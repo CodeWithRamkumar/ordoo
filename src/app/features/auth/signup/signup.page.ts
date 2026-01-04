@@ -59,6 +59,8 @@ export class SignupPage implements OnInit {
   }
 
   async onSignup(ssoData?: any) {
+    console.log('onSignup called', { ssoData, formValid: this.signupForm.valid, formValue: this.signupForm.value });
+    
     this.emailExists = false;
     
     let signupData;
@@ -67,23 +69,29 @@ export class SignupPage implements OnInit {
       signupData = { ...ssoData, isSso: true };
     } else {
       // Regular signup
-      if (!this.signupForm.valid) return;
+      if (!this.signupForm.valid) {
+        console.log('Form is invalid:', this.signupForm.errors);
+        return;
+      }
       signupData = {
         email: this.signupForm.value.email,
         password: this.signupForm.value.password
       };
     }
 
+    console.log('Making API call to:', this.config.AUTH.SIGNUP, 'with data:', signupData);
     await this.loader.show('Creating account...');
     
     this.http.post(this.config.AUTH.SIGNUP, signupData)
       .subscribe({
         next: async (response: any) => {
+          console.log('Signup success:', response);
           await this.authService.saveUserData(response);
           await this.loader.hide();
           this.navCtrl.navigateRoot('/auth/profile-setup');
         },
         error: async (error) => {
+          console.log('Signup error:', error);
           await this.loader.hide();
           console.log('Signup error:', error);
           console.log('Error status:', error.status);

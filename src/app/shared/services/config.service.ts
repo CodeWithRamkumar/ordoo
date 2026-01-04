@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ConfigService {
   private isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   
-  readonly API_BASE_URL = 'http://localhost:3001/api'; // Force localhost for testing
+  readonly API_BASE_URL = 'https://ordoo-backend.onrender.com/api'; // Replace with your actual backend URL
   
   // API Endpoints
   readonly AUTH = {
