@@ -36,7 +36,10 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+            ],
             "browser": "src/main.ts"
           },
           "configurations": {
@@ -110,7 +113,10 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+            ]
           },
           "configurations": {
             "ci": {
@@ -129,7 +135,10 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@ionic/angular-toolkit"]
+    "schematicCollections": [
+      "@ionic/angular-toolkit"
+    ],
+    "analytics": "d4f9ea71-aef9-4285-bc9d-b9ff3d6dd7a0"
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

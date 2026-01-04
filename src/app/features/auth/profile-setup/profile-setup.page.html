@@ -1,0 +1,118 @@
+<ion-content class="profile-setup-content" [scrollY]="false">
+  <div class="setup-wrapper">
+    <!-- Left Section with Logo - Desktop Only -->
+    <div class="left-section">
+      <div class="brand-container">
+        <img src="assets/icon/ordoo-logo.svg" alt="Ordoo Logo" class="brand-logo">
+        <h2 class="brand-title">Complete Your Profile</h2>
+        <p class="brand-text">Add your details to personalize your Ordoo experience</p>
+      </div>
+    </div>
+
+    <!-- Right Section with Profile Form -->
+    <div class="right-section">
+      <div class="scrollable-content">
+        <div class="form-container">
+
+          <h2 class="form-title">Profile</h2>
+          <p class="form-subtitle">Tell us about yourself</p>
+
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+            <!-- Profile Image Upload -->
+            <div class="image-upload-section">
+              <div class="avatar-container" (click)="triggerImageUpload()">
+                <ion-avatar class="profile-avatar">
+                  <img [src]="selectedImageUrl || 'assets/icon/default-avatar.svg'" alt="Profile">
+                  <div class="camera-overlay">
+                    <ion-icon name="camera-outline"></ion-icon>
+                  </div>
+                </ion-avatar>
+              </div>
+              <input type="file" id="imageUpload" accept="image/*" (change)="onImageSelect($event)" style="display: none;">
+            </div> 
+
+            <ion-item>
+              <ion-icon name="person-outline" class="profile-floating-icons-left"></ion-icon>
+              <ion-input class="common-input common-input-design-with-icon-left" formControlName="fullName"
+                labelPlacement="floating" type="text" label="Full Name" fill="outline"
+                placeholder="Enter your full name" mode="md">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="call-outline" class="profile-floating-icons-left"></ion-icon>
+              <ion-input class="common-input common-input-design-with-icon-left" formControlName="phone"
+                labelPlacement="floating" type="tel" label="Phone Number" fill="outline" placeholder="(123) 456-7890"
+                mode="md" (ionInput)="onPhoneInput($event)">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-select 
+                class="common-input"
+                formControlName="gender" 
+                labelPlacement="floating" 
+                label="Gender" 
+                fill="outline"
+                mode="md">
+                <ion-select-option value="male">Male</ion-select-option>
+                <ion-select-option value="female">Female</ion-select-option>
+                <ion-select-option value="other">Other</ion-select-option>
+                <ion-select-option value="prefer-not-to-say">Prefer not to say</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="calendar-outline" class="profile-floating-icons-left"></ion-icon>
+              <div class="date-input-wrapper" 
+                   [class.has-focus]="isDateFocused" 
+                   [class.has-value]="dateOfBirth"
+                   [class.ion-touched]="isDateTouched"
+                   [class.ion-invalid]="isDateInvalid"
+                   [class.ion-valid]="isDateValid">
+                <label class="floating-label">Date of Birth</label>
+                <input 
+                  #dateOfBirthInput
+                  type="text"
+                  placeholder="Select date of birth"
+                  (focus)="isDateFocused = true"
+                  (blur)="onDateBlur()"
+                  readonly>
+              </div>
+            </ion-item>
+
+            <ion-item>
+              <ion-textarea 
+                class="common-input"
+                formControlName="bio" 
+                labelPlacement="floating" 
+                label="Bio" 
+                fill="outline"
+                placeholder="Tell us about yourself..." 
+                mode="md" 
+                rows="5" 
+                maxlength="500" 
+                counter="true">
+              </ion-textarea>
+            </ion-item>
+
+            <ion-button class="btn-primary" mode="md" expand="block"  type="submit" [disabled]="!profileForm.valid">
+              Complete Setup
+            </ion-button>
+          </form>
+
+          <!-- Skip Link -->
+          <div class="skip-section">
+            <p class="skip-text">
+              <ion-text class="skip-link" (click)="skipSetup()">
+                Skip for now
+              </ion-text>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</ion-content>

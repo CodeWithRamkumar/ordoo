@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    @if (showBackButton) {
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="navigationBack()">
+        <ion-icon name="caret-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    }
+
+    <ion-item lines="none" class="header-content">
+      <ion-avatar slot="start">
+        @if (headerImageType === 'image') {
+        <ion-img [src]="headerImage" [alt]="headerTitle"></ion-img>
+        }
+
+        @if (headerImageType === 'icon') {
+        <ion-icon [name]="headerImage"></ion-icon>
+        }
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ headerTitle }}</h2>
+        <p>{{ headerSubtitle }}</p>
+      </ion-label>
+    </ion-item>
+
+    @if (showMenuButton) {
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    }
+  </ion-toolbar>
+</ion-header>

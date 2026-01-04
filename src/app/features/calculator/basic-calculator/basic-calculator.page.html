@@ -1,0 +1,117 @@
+<ion-content>
+  <div class="calculator-container">
+    <div class="calculator-inner-conatiner">
+      <!-- Mobile History View -->
+      @if (showHistory) {
+        <div class="mobile-history">
+          <div class="history-section">
+            <div class="history-header">
+              <h3>
+                <ion-icon name="time-outline"></ion-icon>
+                History
+              </h3>
+              <div class="header-buttons">
+                @if (history.length > 0) {
+                  <button class="clear-btn" (click)="clearHistory()">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </button>
+                }
+                <button class="back-btn" (click)="toggleHistory()">
+                  <ion-icon name="close-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+            @if (history.length > 0) {
+              <div class="history-list">
+                @for (item of history; track item) {
+                  <div class="history-item" (click)="loadFromHistory(item)">
+                    {{ item }}
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="no-history">
+                <ion-icon name="calculator-outline"></ion-icon>
+                <p>No calculations yet</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+  
+      <!-- Desktop Layout -->
+      <div class="left-panel">
+        <div class="history-section">
+          <div class="history-header">
+            <h3>
+              <ion-icon name="time-outline"></ion-icon>
+              History
+            </h3>
+            @if (history.length > 0) {
+              <button class="clear-btn" (click)="clearHistory()">
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+            }
+          </div>
+          @if (history.length > 0) {
+            <div class="history-list">
+              @for (item of history; track item) {
+                <div class="history-item" (click)="loadFromHistory(item)">
+                  {{ item }}
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="no-history">
+              <ion-icon name="calculator-outline"></ion-icon>
+              <p>No calculations yet</p>
+            </div>
+          }
+        </div>
+      </div>
+      
+      <div class="right-panel" [class.mobile-hidden]="showHistory">
+        <div class="calculator">
+          <div class="display">
+            <div class="expression-text">{{ result || '&nbsp;' }}</div>
+            <input class="display-text" [(ngModel)]="display" (input)="onDisplayInput($event)">
+            @if (history.length > 0) {
+              <button class="history-link" (click)="toggleHistory()">
+                <ion-icon name="time-outline"></ion-icon>
+              </button>
+            }
+          </div>
+          
+          <div class="buttons">
+            <button class="btn btn-function" (click)="clearAll()">C</button>
+            <button class="btn btn-function" (click)="clear()">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </button>
+            <button class="btn btn-function" (click)="toggleSign()">±</button>
+            <button class="btn btn-operator" (click)="inputOperation('÷')">÷</button>
+            
+            <button class="btn btn-number" (click)="inputNumber('7')">7</button>
+            <button class="btn btn-number" (click)="inputNumber('8')">8</button>
+            <button class="btn btn-number" (click)="inputNumber('9')">9</button>
+            <button class="btn btn-operator" (click)="inputOperation('×')">×</button>
+            
+            <button class="btn btn-number" (click)="inputNumber('4')">4</button>
+            <button class="btn btn-number" (click)="inputNumber('5')">5</button>
+            <button class="btn btn-number" (click)="inputNumber('6')">6</button>
+            <button class="btn btn-operator" (click)="inputOperation('-')">-</button>
+            
+            <button class="btn btn-number" (click)="inputNumber('1')">1</button>
+            <button class="btn btn-number" (click)="inputNumber('2')">2</button>
+            <button class="btn btn-number" (click)="inputNumber('3')">3</button>
+            <button class="btn btn-operator" (click)="inputOperation('+')">+</button>
+            
+            <button class="btn btn-function" (click)="inputPercent()">%</button>
+            <button class="btn btn-number" (click)="inputNumber('0')">0</button>
+            <button class="btn btn-number" (click)="inputDecimal()">.</button>
+            <button class="btn btn-equals" (click)="performCalculation()">=</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

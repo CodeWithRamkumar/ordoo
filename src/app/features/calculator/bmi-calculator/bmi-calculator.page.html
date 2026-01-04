@@ -1,0 +1,253 @@
+<ion-content>
+  <div class="calculator-container">
+    <div class="calculator-inner-container">
+      <div class="left-panel">
+        <div class="bmi-result-container" #bmiResultContainer>
+          <!-- BMI Score Circle -->
+          <div class="bmi-circle" [class]="'circle-' + categoryColor">
+            <div class="bmi-number">{{ bmi || '0.0' }}</div>
+            <div class="bmi-label">BMI</div>
+          </div>
+          
+          <!-- BMI Status -->
+          <div class="bmi-status-card">
+            <div class="status-text" [class]="'text-' + categoryColor">
+              {{ category || 'Enter your details to calculate' }}
+            </div>
+            @if (category) {
+              <div class="status-description">
+                {{ getBMIDescription() }}
+              </div>
+            }
+          </div>
+          
+          <!-- BMI Range Indicator -->
+          @if (bmi > 0) {
+            <div class="bmi-range-indicator">
+              <div class="range-bar">
+                <div class="range-segment underweight"></div>
+                <div class="range-segment normal"></div>
+                <div class="range-segment overweight"></div>
+                <div class="range-segment obese"></div>
+                <div class="range-pointer" [style.left.%]="getBMIPosition()"></div>
+              </div>
+              <div class="range-labels">
+                <span>18.5</span>
+                <span>25</span>
+                <span>30</span>
+              </div>
+            </div>
+          }
+          
+          <!-- Action Button -->
+          <div class="action-section">
+            <ion-button class="btn-secondary" mode="md" fill="outline" (click)="openCategoriesModal()">
+              <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+              View BMI Guide
+            </ion-button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <div class="bmi-calculator">
+          <div class="input-section">
+            <div class="section-header">
+              <h3>BMI Calculator</h3>
+            </div>
+            
+            <div class="input-group">
+              <ion-item>
+                <ion-select 
+                  class="common-input"
+                  [(ngModel)]="unit" 
+                  (ionChange)="reset()" 
+                  labelPlacement="floating" 
+                  label="Unit System" 
+                  fill="outline"
+                  mode="md">
+                  <ion-select-option value="metric">Metric (kg, cm)</ion-select-option>
+                  <ion-select-option value="imperial">Imperial (lbs, ft)</ion-select-option>
+                </ion-select>
+              </ion-item>
+              
+              <div class="input-row">
+                <ion-item>
+                  <ion-select 
+                    class="common-input"
+                    [(ngModel)]="gender" 
+                    (ionChange)="calculateBMI()" 
+                    labelPlacement="floating" 
+                    label="Gender" 
+                    fill="outline"
+                    mode="md">
+                    <ion-select-option value="male">Male</ion-select-option>
+                    <ion-select-option value="female">Female</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-input 
+                    class="common-input"
+                    type="number" 
+                    [(ngModel)]="age" 
+                    (ionInput)="calculateBMI()"
+                    labelPlacement="floating"
+                    label="Age (years)"
+                    fill="outline"
+                    placeholder="Enter age"
+                    mode="md">
+                  </ion-input>
+                </ion-item>
+              </div>
+              
+              <div class="input-row">
+                <ion-item>
+                  <ion-input 
+                    class="common-input"
+                    type="number" 
+                    [(ngModel)]="weight" 
+                    (ionInput)="calculateBMI()"
+                    labelPlacement="floating"
+                    [label]="'Weight ' + (unit === 'metric' ? '(kg)' : '(lbs)')"
+                    fill="outline"
+                    placeholder="Enter weight"
+                    mode="md">
+                  </ion-input>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-input 
+                    class="common-input"
+                    type="number" 
+                    [(ngModel)]="height" 
+                    (ionInput)="calculateBMI()"
+                    labelPlacement="floating"
+                    [label]="'Height ' + (unit === 'metric' ? '(cm)' : '(ft)')"
+                    fill="outline"
+                    placeholder="Enter height"
+                    mode="md">
+                  </ion-input>
+                </ion-item>
+              </div>
+            </div>
+            
+            <div class="button-group">
+              <ion-button class="btn-primary" mode="md" (click)="calculateBMIWithScroll()" [disabled]="!weight || !height">
+                Calculate
+              </ion-button>
+              <ion-button class="btn-secondary" mode="md" fill="outline" (click)="reset()">
+                Reset
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- BMI Categories Modal -->
+<ion-modal #categoriesModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>BMI Categories</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="categoriesModal.dismiss()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="bmi-modal-content">
+        <div class="modal-intro">
+          <h2>BMI Categories</h2>
+          <p>Understanding Body Mass Index ranges</p>
+        </div>
+        
+        <div class="bmi-categories">
+          <div class="adult-section">
+            <h3>Adult BMI Ranges</h3>
+            <div class="bmi-ranges">
+              <div class="bmi-range underweight">
+                <div class="range-info">
+                  <span class="range-name">Underweight</span>
+                  <span class="range-value">Below 18.5</span>
+                </div>
+                <p>May indicate health concerns. Consult healthcare provider.</p>
+              </div>
+              
+              <div class="bmi-range normal">
+                <div class="range-info">
+                  <span class="range-name">Normal Weight</span>
+                  <span class="range-value">18.5 - 24.9</span>
+                </div>
+                <p>Healthy weight range. Maintain with balanced lifestyle.</p>
+              </div>
+              
+              <div class="bmi-range overweight">
+                <div class="range-info">
+                  <span class="range-name">Overweight</span>
+                  <span class="range-value">25 - 29.9</span>
+                </div>
+                <p>Consider lifestyle changes and regular exercise.</p>
+              </div>
+              
+              <div class="bmi-range obese">
+                <div class="range-info">
+                  <span class="range-name">Obese</span>
+                  <span class="range-value">30 and above</span>
+                </div>
+                <p>Consult healthcare provider for guidance.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="child-section">
+            <h3>Child BMI Ranges</h3>
+            <div class="bmi-ranges">
+              <div class="bmi-range underweight">
+                <div class="range-info">
+                  <span class="range-name">Underweight</span>
+                  <span class="range-value">Below 16</span>
+                </div>
+                <p>Consult pediatrician for nutrition assessment.</p>
+              </div>
+              
+              <div class="bmi-range normal">
+                <div class="range-info">
+                  <span class="range-name">Normal Weight</span>
+                  <span class="range-value">16 - 23</span>
+                </div>
+                <p>Healthy range. Encourage active lifestyle.</p>
+              </div>
+              
+              <div class="bmi-range overweight">
+                <div class="range-info">
+                  <span class="range-name">Overweight</span>
+                  <span class="range-value">23 - 27</span>
+                </div>
+                <p>Focus on healthy habits. Consult pediatrician.</p>
+              </div>
+              
+              <div class="bmi-range obese">
+                <div class="range-info">
+                  <span class="range-name">Obese</span>
+                  <span class="range-value">27 and above</span>
+                </div>
+                <p>Medical attention required. Consult pediatrician.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-note">
+          <p><strong>Note:</strong> BMI is a screening tool. Consult healthcare professionals for personalized advice.</p>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

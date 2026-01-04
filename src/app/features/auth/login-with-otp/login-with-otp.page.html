@@ -1,0 +1,47 @@
+<div class="otp-modal-wrapper">
+  <ion-button fill="clear" class="close-button" (click)="close.emit()">
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+  
+  <div class="form-container">
+    <div class="illustration">
+      <div class="otp-icon">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+      </div>
+    </div>
+    
+    <h2 class="form-title">Enter OTP</h2>
+    <p class="form-subtitle">We've sent a 6-digit verification code to {{ email }}</p>
+
+    <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()" class="otp-form">
+      <ion-input-otp 
+        class="common-input"
+        [length]="6" 
+        formControlName="otp"
+        (ionInput)="onOtpChange($event)">
+      </ion-input-otp>
+      
+      @if (otpError) {
+        <div class="error-text">
+          Invalid or expired OTP. Please try again.
+        </div>
+      }
+      @if (!otpError && otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched) {
+        <div class="error-text">
+          Please enter complete 6-digit OTP
+        </div>
+      }
+
+      <ion-button class="btn-primary" mode="md" expand="block" type="submit" [disabled]="otpLength < 6">
+        Verify OTP
+      </ion-button>
+    </form>
+    
+    <div class="resend-section">
+      <p class="resend-text">Didn't receive the code?</p>
+      <ion-button fill="clear" class="resend-button" (click)="resendOTP()">
+        Resend Code
+      </ion-button>
+    </div>
+  </div>
+</div>

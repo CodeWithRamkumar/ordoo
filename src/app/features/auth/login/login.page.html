@@ -1,0 +1,114 @@
+<ion-content class="login-content" [scrollY]="false">
+  <div class="login-wrapper">
+    <!-- Left Section with Logo - Desktop Only -->
+    <div class="left-section">
+      <div class="brand-container">
+        <img src="assets/icon/ordoo-logo.svg" alt="Ordoo Logo" class="brand-logo">
+        <h2 class="brand-title">Welcome to Ordoo</h2>
+        <p class="brand-text">Organize your world with ease and efficiency</p>
+      </div>
+    </div>
+
+    <!-- Right Section with Login Form -->
+    <div class="right-section">
+      <div class="scrollable-content">
+        <div class="form-container">
+        <!-- Logo - Mobile/Tablet Only -->
+        <div class="logo-section">
+          <div class="logo-circle">
+            <img src="assets/icon/ordoo-logo.svg" alt="Ordoo Logo" class="logo-icon">
+          </div>
+          <h1 class="app-title">Ordoo</h1>
+        </div>
+
+        <h2 class="form-title">Welcome Back</h2>
+        <p class="form-subtitle">Please sign in to your account</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+          <ion-item [class.error-item]="emailNotExists || loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <ion-icon name="mail-outline" class="login-floating-icons-left"></ion-icon>
+            <ion-input class="common-input common-input-design-with-icon-left" formControlName="email" labelPlacement="floating"
+              type="email" label="Email address" fill="outline" placeholder="Enter email" mode="md"
+              [class.ion-invalid]="emailNotExists || loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              [class.ion-touched]="emailNotExists || loginForm.get('email')?.touched"
+              [errorText]="emailNotExists ? 'Email does not exist' : 'Please enter a valid email'"
+              (ionInput)="clearEmailError()">
+            </ion-input>
+          </ion-item>
+
+
+          <ion-item [class.error-item]="passwordInvalid || loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <ion-icon name="lock-closed-outline" class="login-floating-icons-left"></ion-icon>
+            <ion-input class="common-input common-input-design-with-icon-left-and-right" labelPlacement="floating"
+              formControlName="password" [type]="showPassword ? 'text' : 'password'" label="Password" fill="outline"
+              mode="md" placeholder="Enter password"
+              [class.ion-invalid]="passwordInvalid || loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              [class.ion-touched]="passwordInvalid || loginForm.get('password')?.touched"
+              [errorText]="passwordInvalid ? 'Password is invalid' : 'Password must be at least 6 characters'"
+              (ionInput)="clearPasswordError()">
+            </ion-input>
+            <ion-icon class="login-floating-icons-right" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              (click)="togglePassword()">
+            </ion-icon>
+          </ion-item>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-options">
+            <ion-text class="forgot-link" (click)="navigateToForgotPassword()">
+              Forgot Password?
+            </ion-text>
+          </div>
+
+          <!-- Login Button -->
+          <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="login-button">
+            Login In
+          </ion-button>
+        </form>
+
+        <!-- Alternative Login Options -->
+        <div class="alternative-login">
+          <ion-text class="otp-link" (click)="loginWithOTP()">
+            Login with OTP
+          </ion-text>
+          
+          <div class="divider">
+            <span class="divider-text">or</span>
+          </div>
+          
+          <div class="sso-buttons">
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="loginWithGoogle()">
+              <ion-icon name="logo-google"></ion-icon>
+            </ion-button>
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="loginWithFacebook()">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </ion-button>
+            <ion-button mode="md"  fill="outline" class="sso-icon-button" (click)="loginWithApple()">
+              <ion-icon name="logo-apple"></ion-icon>
+            </ion-button>
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="loginWithTwitter()">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="signup-section">
+          <p class="signup-text">
+            Don't have an account?
+            <ion-text class="signup-link" (click)="navigateToSignup()">
+              Sign Up
+            </ion-text>
+          </p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTP Modal -->
+  <ion-modal [isOpen]="isOtpModalOpen" (didDismiss)="closeOtpModal()" [canDismiss]="true" [showBackdrop]="true">
+    <ng-template>
+      <app-login-with-otp [email]="currentEmail" (close)="closeOtpModal()"></app-login-with-otp>
+    </ng-template>
+  </ion-modal>
+</ion-content>

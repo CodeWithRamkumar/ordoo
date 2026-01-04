@@ -1,0 +1,109 @@
+<ion-content class="signup-content" [scrollY]="false">
+  <div class="signup-wrapper">
+    <!-- Left Section with Logo - Desktop Only -->
+    <div class="left-section">
+      <div class="brand-container">
+        <img src="assets/icon/ordoo-logo.svg" alt="Ordoo Logo" class="brand-logo">
+        <h2 class="brand-title">Join Ordoo Today</h2>
+        <p class="brand-text">Create your account and start organizing your world</p>
+      </div>
+    </div>
+
+    <!-- Right Section with Signup Form -->
+    <div class="right-section">
+      <div class="scrollable-content">
+        <div class="form-container">
+        <!-- Logo - Mobile/Tablet Only -->
+        <div class="logo-section">
+          <div class="logo-circle">
+            <img src="assets/icon/ordoo-logo.svg" alt="Ordoo Logo" class="logo-icon">
+          </div>
+          <h1 class="app-title">Ordoo</h1>
+        </div>
+
+        <h2 class="form-title">Create Account</h2>
+        <p class="form-subtitle">Please fill in your details to sign up</p>
+
+        <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="signup-form">
+
+          <ion-item [class.error-item]="emailExists || signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+            <ion-icon name="mail-outline" class="signup-floating-icons-left"></ion-icon>
+            <ion-input class="common-input common-input-design-with-icon-left" formControlName="email" labelPlacement="floating"
+              type="email" label="Email address" fill="outline" placeholder="Enter email" mode="md"
+              [class.ion-invalid]="emailExists || signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+              [class.ion-touched]="emailExists || signupForm.get('email')?.touched"
+              [errorText]="emailExists ? 'Email already exists' : 'Please enter a valid email'"
+              (ionInput)="clearEmailError()">
+            </ion-input>
+          </ion-item>
+
+          <ion-item [class.error-item]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+            <ion-icon name="lock-closed-outline" class="signup-floating-icons-left"></ion-icon>
+            <ion-input class="common-input common-input-design-with-icon-left-and-right" labelPlacement="floating"
+              formControlName="password" [type]="showPassword ? 'text' : 'password'" label="Password" fill="outline"
+              mode="md" placeholder="Enter password"
+              [class.ion-invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+              [class.ion-touched]="signupForm.get('password')?.touched"
+              errorText="Password must be at least 6 characters">
+            </ion-input>
+            <ion-icon class="signup-floating-icons-right" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              (click)="togglePassword()">
+            </ion-icon>
+          </ion-item>
+
+          <ion-item [class.error-item]="signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched">
+            <ion-icon name="lock-closed-outline" class="signup-floating-icons-left"></ion-icon>
+            <ion-input class="common-input common-input-design-with-icon-left-and-right" labelPlacement="floating"
+              formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" label="Confirm Password" fill="outline"
+              mode="md" placeholder="Confirm password"
+              [class.ion-invalid]="signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+              [class.ion-touched]="signupForm.get('confirmPassword')?.touched"
+              [errorText]="signupForm.get('confirmPassword')?.hasError('passwordMismatch') ? 'Passwords must match' : 'Please confirm your password'">
+            </ion-input>
+            <ion-icon class="signup-floating-icons-right" [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
+              (click)="toggleConfirmPassword()">
+            </ion-icon>
+          </ion-item>
+
+          <!-- Signup Button -->
+          <ion-button class="btn-primary" mode="md" expand="block" type="submit" [disabled]="signupForm.invalid">
+            Sign Up
+          </ion-button>
+        </form>
+
+        <!-- Alternative Signup Options -->
+        <div class="alternative-signup">
+          <div class="divider">
+            <span class="divider-text">or</span>
+          </div>
+          
+          <div class="sso-buttons">
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="signupWithGoogle()">
+              <ion-icon name="logo-google"></ion-icon>
+            </ion-button>
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="signupWithFacebook()">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </ion-button>
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="signupWithApple()">
+              <ion-icon name="logo-apple"></ion-icon>
+            </ion-button>
+            <ion-button mode="md" fill="outline" class="sso-icon-button" (click)="signupWithTwitter()">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Login Link -->
+        <div class="login-section">
+          <p class="login-text">
+            Already have an account?
+            <ion-text class="login-link" (click)="navigateToLogin()">
+              Sign In
+            </ion-text>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</ion-content>

@@ -1,0 +1,40 @@
+ion-icon {
+  cursor: pointer;
+}
+
+.header-content {
+  --padding-start: var(--spacing-sm);
+  --padding-end: var(--spacing-sm);
+  --min-height: 60px;
+}
+
+ion-avatar {
+  width: 40px;
+  height: 40px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ion-color-primary);
+  ion-icon{
+    font-size: var(--font-size-6xl);
+    color: var(--ion-color-primary);
+    border-radius: 50%;
+
+  }
+}
+
+ion-label {
+  margin: 0;
+}
+
+ion-label h2 {
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+ion-label p {
+  font-weight: var(--font-weight-light);
+  margin: 2px 0 0 0;
+  color: inherit;
+}

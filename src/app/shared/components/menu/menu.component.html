@@ -1,0 +1,47 @@
+<ion-menu contentId="main-content" menuId="main-menu" side="end">
+  <ion-header>
+    <ion-toolbar class="menu-header">
+      <div class="profile-section">
+        <ion-avatar class="profile-avatar">
+          <ion-img [src]="userProfile.image" alt="User Profile"></ion-img>
+        </ion-avatar>
+        <div class="profile-info">
+          <h2 class="profile-name">{{ userProfile.name }}</h2>
+          <div class="email-container">
+            <p class="profile-email">{{ userProfile.email }}</p>
+            <div class="copy-container">
+              <ion-icon name="copy" class="copy-icon" (click)="copyEmail()"></ion-icon>
+              <span class="copy-tooltip" [class.show]="showCopied">Copied!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="menu-content">
+    <ion-list lines="none">
+      <ion-item button detail="false" class="menu-item" [class.active-item]="isActive('/profile')" (click)="navigateTo('/profile')">
+        <ion-icon name="person" slot="start" class="menu-icon"></ion-icon>
+        <ion-label class="menu-label">Profile</ion-label>
+      </ion-item>
+
+      <ion-item button detail="false" class="menu-item" [class.active-item]="isActive('/workspace')" (click)="navigateTo('/workspace')">
+        <ion-icon name="home" slot="start" class="menu-icon"></ion-icon>
+        <ion-label class="menu-label">Home</ion-label>
+      </ion-item>
+
+      <ion-item button detail="false" class="menu-item" [class.active-item]="isActive('/workspace/calculator-dashboard')" (click)="navigateTo('/workspace/calculator-dashboard')">
+        <ion-icon name="calculator" slot="start" class="menu-icon"></ion-icon>
+        <ion-label class="menu-label">Calculator</ion-label>
+      </ion-item>
+
+      <div class="menu-divider"></div>
+
+      <ion-item button detail="false" class="menu-item" (click)="logout()">
+        <ion-icon name="log-out" slot="start" class="menu-icon"></ion-icon>
+        <ion-label class="menu-label">Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

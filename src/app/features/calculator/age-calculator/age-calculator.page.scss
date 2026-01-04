@@ -1,0 +1,308 @@
+* {
+  color: var(--ion-text-color);
+}
+
+.calculator-container {
+    height: 100%;
+    align-content: center;
+    padding: var(--spacing-md);
+    overflow: auto;
+}
+
+.calculator-inner-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+}
+
+.age-result-container {
+  background: var(--ion-card-background);
+  border-radius: var(--border-radius-xl);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: var(--spacing-lg);
+  font-family: var(--ion-font-family);
+  max-width: 400px;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+}
+
+.age-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--ion-color-primary);
+  background: rgba(var(--ion-color-primary-rgb), 0.1);
+  transition: all 0.3s ease;
+}
+
+.age-number {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--ion-color-primary);
+  font-family: monospace;
+  line-height: 1;
+}
+
+.age-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--ion-color-primary);
+  margin-top: var(--spacing-xs);
+}
+
+.age-breakdown {
+  display: flex;
+  gap: var(--spacing-lg);
+  width: 100%;
+  justify-content: center;
+}
+
+.breakdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.breakdown-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--ion-text-color);
+  font-family: monospace;
+}
+
+.breakdown-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.total-stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--ion-background-color);
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--ion-color-light);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--ion-text-color);
+  font-family: monospace;
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+}
+
+.age-calculator {
+  background: var(--ion-card-background);
+  border-radius: var(--border-radius-xl);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: var(--spacing-lg);
+  font-family: var(--ion-font-family);
+  max-width: 400px;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.section-header {
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--ion-color-primary);
+  text-align: center;
+  
+  h3 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--ion-color-primary);
+    margin: 0;
+  }
+}
+
+.age-floating-icons-left {
+  position: absolute;
+  top: 18px;
+  inset-inline-start: 12px;
+  z-index: 999;
+  color: var(--ion-text-color);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  flex: 1;
+  justify-content: center;
+  
+  ion-item {
+    --border-width: 0;
+    --inner-border-width: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    overflow: visible !important;
+    --background: none;
+  }
+}
+
+.date-input-wrapper {
+  width: 100%;
+  position: relative;
+  
+  .floating-label {
+    font-size: var(--font-size-lg);
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    color: var(--ion-text-color);
+    background: var(--ion-background-color);
+    padding: 0 4px;
+    z-index: 1;
+    font-weight: var(--font-weight-medium);
+  }
+  
+  input {
+    width: 100%;
+    padding: 16px;
+    border: 1.5px solid var(--ion-text-color);
+    border-radius: 8px;
+    background: var(--ion-background-color);
+    color: var(--ion-text-color);
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    
+    &:focus {
+      outline: none;
+    }
+    
+    &::placeholder {
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  
+  ion-button {
+    width: 50%;
+  }
+}
+
+ion-content {
+  --padding-bottom: 0;
+  overflow: hidden;
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .calculator-inner-container{
+    flex-direction: column-reverse;
+    gap: var(--spacing-md);
+  }
+  
+  .left-panel, .right-panel {
+    padding: 0;
+    width: 100%;
+    flex: 1;
+  }
+  
+  .age-result-container, .age-calculator {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .input-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+  }
+  
+  .input-group {
+    flex: 1;
+    gap: var(--spacing-md);
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    
+    ion-button {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+  
+  .age-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .age-number {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .breakdown-item {
+    gap: var(--spacing-xs);
+  }
+  
+  .breakdown-value {
+    font-size: var(--font-size-lg);
+  }
+}

@@ -1,3 +1,187 @@
+/* Custom Theme Variables */
+@use './theme/variables.scss';
+@use './theme/fonts.scss';
+
+/* Bootstrap CSS */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+
+/* Perfect Bootstrap Datepicker Theme */
+.datepicker {
+  background: var(--ion-card-background) !important;
+  border: 1px solid var(--ion-text-color) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  max-width: 320px !important;
+  padding: 16px !important;
+  overflow: visible !important;
+  height: auto !important;
+
+  .datepicker-days {
+    .table-condensed {
+      background: transparent !important;
+      margin: 0 !important;
+      border: none !important;
+      width: 100% !important;
+      table-layout: fixed !important;
+
+      thead {
+        background: var(--ion-background-color) !important;
+        border-radius: 8px !important;
+
+        th {
+          color: var(--ion-text-color) !important;
+          font-weight: var(--font-weight-semibold) !important;
+          padding: 12px 8px !important;
+          font-size: var(--font-size-md)  !important;
+          border: none !important;
+
+          &.prev,
+          &.next {
+            color: var(--ion-color-primary) !important;
+            cursor: pointer !important;
+            border-radius: 6px !important;
+
+            &:hover {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+          }
+
+          &.datepicker-switch {
+            color: var(--ion-color-primary) !important;
+            cursor: pointer !important;
+
+            &:hover {
+              color: var(--ion-color-primary) !important;
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+
+      tbody {
+        td {
+          padding: 2px !important;
+          border: none !important;
+          text-align: center !important;
+
+          &.day {
+            color: var(--ion-text-color) !important;
+            cursor: pointer !important;
+            height: 36px !important;
+            line-height: 32px !important;
+            border-radius: 6px !important;
+
+            &:hover {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+
+            &.active {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+
+            &.today {
+              background: var(--ion-color-success) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .datepicker-months,
+  .datepicker-years {
+    .table-condensed {
+      background: transparent !important;
+      margin: 0 !important;
+      border: none !important;
+      width: 100% !important;
+      table-layout: fixed !important;
+
+      thead {
+        background: var(--ion-background-color) !important;
+        border-radius: 8px !important;
+
+        th {
+          color: var(--ion-text-color) !important;
+         font-weight: var(--font-weight-semibold) !important;
+          padding: 12px 8px !important;
+          font-size: var(--font-size-md)  !important;
+          border: none !important;
+
+          &.prev,
+          &.next {
+            color: var(--ion-color-primary) !important;
+            cursor: pointer !important;
+            border-radius: 6px !important;
+
+            &:hover {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+          }
+
+          &.datepicker-switch {
+            color: var(--ion-color-primary) !important;
+            cursor: pointer !important;
+
+            &:hover {
+              color: var(--ion-color-primary) !important;
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+
+      tbody {
+        td {
+          padding: 4px !important;
+          border: none !important;
+          width: 290px !important;
+          height: 250px !important;
+          text-align: center !important;
+          justify-content: space-between;
+          align-items: center;
+          display: inline-flex;
+          flex-wrap: wrap;
+
+          span {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            color: var(--ion-text-color) !important;
+            cursor: pointer !important;
+            padding: 10px 4px !important;
+            margin: 0 !important;
+            border-radius: 6px !important;
+            font-size: var(--font-size-md) !important;
+           font-weight: var(--font-weight-medium) !important;
+            background: var(--ion-background-color) !important;
+            transition: all 0.2s ease !important;
+            box-sizing: border-box !important;
+
+            &:hover {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+            }
+
+            &.active {
+              background: var(--ion-color-primary) !important;
+              color: var(--ion-white-color-text) !important;
+              font-weight: var(--font-weight-semibold) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -34,4 +218,152 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+.common-input-design-with-icon-left-and-right .input-wrapper.sc-ion-input-md {
+  padding-inline-start: 46px !important;
+  padding-inline-end: 46px !important;
+}
+
+.common-input-design-with-icon-left .input-wrapper.sc-ion-input-md {
+  padding-inline-start: 46px !important;
+}
+
+.common-input-design-with-icon-left-and-right.label-floating {
+  label {
+    .label-text-wrapper.sc-ion-input-md {
+      left: 18px !important;
+    }
+  }
+}
+
+
+.common-input-design-with-icon-left.label-floating {
+  label {
+    .label-text-wrapper.sc-ion-input-md {
+      left: 18px !important;
+    }
+  }
+}
+
+/* Common Input Validation Styles */
+.common-input {
+  /* Default black border */
+  --border-color: var(--ion-text-color) !important;
+  --border-width: 1.5px !important;
+  --border-radius: 8px !important;
+
+  /* Default label color */
+  .label-text {
+    color: var(--ion-text-color) !important;
+  }
+
+  /* Invalid state - red border */
+  &.ion-touched.ion-invalid {
+    --border-color: var(--ion-color-danger) !important;
+
+    .label-text {
+      color: var(--ion-color-danger) !important;
+    }
+  }
+
+  /* Valid state - black border */
+  &.ion-touched.ion-valid {
+    --border-color: var(--ion-text-color) !important;
+
+    .label-text {
+      color: var(--ion-text-color) !important;
+    }
+  }
+
+  /* Focus states */
+  &.has-focus {
+    --border-color: var(--ion-text-color) !important;
+
+    .label-text {
+      color: var(--ion-text-color) !important;
+    }
+  }
+}
+
+/* Ion-select validation styles with higher specificity */
+ion-select.common-input.ng-invalid.ng-touched {
+  --border-color: var(--ion-color-danger) !important;
+  --highlight-color: var(--ion-color-danger) !important;
+}
+
+ion-select.common-input:host(.ion-invalid) {
+  --highlight-color: var(--ion-color-danger) !important;
+}
+
+ion-select.common-input.ng-valid.ng-touched {
+  --border-color: var(--ion-text-color) !important;
+  --highlight-color: var(--ion-text-color) !important;
+}
+
+/* Override Ionic's default validation styles */
+ion-select.common-input:host(.ion-valid) {
+  --highlight-color: var(--ion-text-color) !important;
+}
+
+/* Ion-textarea validation styles */
+ion-textarea.common-input.ng-invalid.ng-touched {
+  --border-color: var(--ion-color-danger) !important;
+}
+
+ion-textarea.common-input.ng-valid.ng-touched {
+  --border-color: var(--ion-text-color) !important;
+}
+
+
+.alert-radio-label.sc-ion-alert-md {
+  color: var(--ion-text-color) !important;
+}
+
+// Let Ionic handle native outline styling
+form {
+  ion-item {
+    --border-width: 0;
+    --inner-border-width: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    overflow: visible !important;
+    --background: none;
+  }
+}
+
+/* Common Button Styles */
+.btn-primary {
+  --background: var(--ion-color-primary) !important;
+  --color: var(--ion-white-color-text) !important;
+  --border-radius: var(--border-radius-lg) !important;
+  height: 52px !important;
+  font-weight: var(--font-weight-semibold) !important;
+  font-size: var(--font-size-base) !important;
+  color: var(--ion-white-color-text) !important;
+  
+  &:disabled {
+    opacity: 0.4 !important;
+    --box-shadow: none !important;
+  }
+}
+
+.btn-secondary {
+  --background: transparent !important;
+  --color: var(--ion-color-primary) !important;
+  --border-color: var(--ion-color-primary) !important;
+  --border-width: 1.5px !important;
+  --border-style: solid !important;
+  --border-radius: var(--border-radius-lg) !important;
+  height: 52px !important;
+  font-weight: var(--font-weight-semibold) !important;
+  font-size: var(--font-size-base) !important;
+  color: var(--ion-color-primary) !important;
+  
+  &:disabled {
+    opacity: 0.4 !important;
+    --box-shadow: none !important;
+  }
+}

@@ -1,0 +1,14 @@
+ion-tab-bar {
+  --border: 1px solid rgba(0, 0, 0, 0.07) !important;
+}
+
+
+ion-tab-button.tab-selected {
+  --color: var(--ion-color-primary);
+  opacity: 1;
+  
+  ion-icon,
+  ion-label {
+    color: var(--ion-color-primary);
+  }
+}

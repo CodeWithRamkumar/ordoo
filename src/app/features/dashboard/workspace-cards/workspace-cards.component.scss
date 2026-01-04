@@ -1,0 +1,74 @@
+*{
+  color: var(--ion-text-color);
+}
+
+.works-space-container {
+  height: 100%;
+  overflow: auto;
+  align-content: center;
+  padding: var(--spacing-lg);
+}
+
+.workspace-header {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+
+  h2 {
+    margin: 0 0 8px 0;
+    font-size: var(--font-size-7xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  p {
+    margin: 0;
+    font-weight: var(--font-weight-light);
+  }
+}
+
+.workspace-cards-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.workspace-card {
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 300px;
+  margin: 0px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-lg);
+  }
+}
+
+.card-icon {
+  color: var(--ion-color-primary);
+  font-size: var(--font-size-9xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-text {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.card-subtext {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  margin: 0;
+}

@@ -1,0 +1,133 @@
+ion-menu {
+  --width: 100%;
+  --max-width: 350px;
+}
+
+.menu-header {
+  --background: var(--ion-color-primary);
+  padding: var(--spacing-md) 0;
+
+  .profile-section {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+
+    .profile-avatar {
+      background-color: var(--ion-white-color-background);
+      width: 64px;
+      height: 64px;
+      border: 2px solid var(--ion-white-color-text);
+    }
+  }
+}
+
+.profile-info {
+  flex: 1;
+  overflow: hidden;
+
+  .profile-name {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--ion-white-color-text);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .email-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    min-width: 0;
+
+    .profile-email {
+      margin: 0;
+      font-size: var(--font-size-sm);
+      color: var(--ion-white-color-text);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .copy-icon {
+      font-size: var(--font-size-base);
+      color: var(--ion-white-color-text);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .copy-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .copy-tooltip {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 1000;
+    }
+
+    .copy-tooltip.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.menu-content {
+  ion-list {
+    padding: 8px;
+  }
+}
+
+.menu-list {
+  padding: 16px 8px;
+}
+
+.menu-item {
+  margin: 8px 0;
+  border-radius: 8px;
+  font-weight: var(--font-weight-medium);
+}
+
+.menu-icon {
+  font-size: var(--font-size-3xl);
+  margin-right: 16px;
+  color: var(--ion-text-color);
+}
+
+.menu-label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.active-item {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-white-color-text);
+
+  .menu-icon,.menu-label {
+    color: var(--ion-white-color-text);
+  }
+}
+
+.menu-divider {
+  height: 1px;
+  opacity: 0.3;
+  background-color: var(--ion-text-color);
+}

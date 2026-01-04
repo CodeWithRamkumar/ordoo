@@ -1,0 +1,13 @@
+<app-header 
+  [headerTitle]="(headerData$ | async)?.title ?? 'My Workspace'"
+  [headerSubtitle]="(headerData$ | async)?.subtitle ?? 'Access all your applications'"
+  [headerImage]="(headerData$ | async)?.image ?? 'assets/icon/ordoo-logo.svg'"
+  [headerImageType]="(headerData$ | async)?.imageType ?? 'image'"
+  [showBackButton]="(headerData$ | async)?.showBack ?? false"
+  [showMenuButton]="(headerData$ | async)?.showMenu ?? true"
+  [backNavigationUrl]="(headerData$ | async)?.backNavigationUrl ?? ''">
+</app-header>
+<ion-content class="ion-padding" scrollX="true">
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>
+<app-tabs></app-tabs>

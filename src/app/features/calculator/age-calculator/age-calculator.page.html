@@ -1,0 +1,92 @@
+<ion-content>
+  <div class="calculator-container">
+    <div class="calculator-inner-container">
+      <div class="left-panel">
+        <div class="age-result-container" #ageResultContainer>
+          <!-- Age Display Circle -->
+          <div class="age-circle">
+            <div class="age-number">{{ years || '0' }}</div>
+            <div class="age-label">Years</div>
+          </div>
+          
+          <!-- Age Breakdown -->
+          <div class="age-breakdown">
+            <div class="breakdown-item">
+              <span class="breakdown-value">{{ years }}</span>
+              <span class="breakdown-label">Years</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="breakdown-value">{{ months }}</span>
+              <span class="breakdown-label">Months</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="breakdown-value">{{ days }}</span>
+              <span class="breakdown-label">Days</span>
+            </div>
+          </div>
+          
+          <!-- Total Statistics -->
+          <div class="total-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{ totalDays | number }}</span>
+              <span class="stat-label">Total Days</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ totalWeeks | number }}</span>
+              <span class="stat-label">Total Weeks</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ totalHours | number }}</span>
+              <span class="stat-label">Total Hours</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <div class="age-calculator">
+          <div class="input-section">
+            <div class="section-header">
+              <h3>Age Calculator</h3>
+            </div>
+            
+            <div class="input-group">
+              <ion-item>
+                <ion-icon name="calendar-outline" class="age-floating-icons-left"></ion-icon>
+                <div class="date-input-wrapper">
+                  <label class="floating-label">Birth Date</label>
+                  <input 
+                    #birthDateInput
+                    type="text"
+                    placeholder="Select birth date"
+                    readonly>
+                </div>
+              </ion-item>
+              
+              <ion-item>
+                <ion-icon name="calendar-outline" class="age-floating-icons-left"></ion-icon>
+                <div class="date-input-wrapper">
+                  <label class="floating-label">Calculate Age On</label>
+                  <input 
+                    #targetDateInput
+                    type="text"
+                    placeholder="Select target date"
+                    readonly>
+                </div>
+              </ion-item>
+            </div>
+            
+            <div class="button-group">
+              <ion-button class="btn-primary" mode="md" (click)="calculateAge()" [disabled]="!birthDate">
+                Calculate
+              </ion-button>
+              <ion-button class="btn-secondary" mode="md"  fill="outline" (click)="reset()">
+                Reset
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,18 @@
+<div class="works-space-container">
+    <div class="workspace-header">
+      <h2>{{pageHeading}}</h2>
+      <p>{{pageSubHeading}}</p>
+    </div>
+    
+    <div class="workspace-cards-container">
+      @for (card of cards; track card.text) {
+        <ion-card (click)="navigateToRoute(card.route)" class="workspace-card">
+          <ion-card-content>
+            <ion-icon [name]="card.icon" class="card-icon"></ion-icon>
+            <ion-label class="card-text">{{ card.text }}</ion-label>
+            <ion-label class="card-subtext">{{ card.subtext }}</ion-label>
+          </ion-card-content>
+        </ion-card>
+      }
+    </div>
+</div>
