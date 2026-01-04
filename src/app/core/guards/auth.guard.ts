@@ -6,8 +6,7 @@ import { AuthService } from '../../shared/services/auth.service';
 export const authGuard: CanActivateFn = async (route, state) => {
   const navCtrl = inject(NavController);
   const authService = inject(AuthService);
-  // const token = await authService.getToken();
-  const token = true;
+  const token = await authService.getToken();
 
   // Allow access to public auth routes without token
   if (state.url.includes('/auth/login') || 
