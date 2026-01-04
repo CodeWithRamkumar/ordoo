@@ -199,7 +199,7 @@
     font-size: var(--font-size-lg);
     position: absolute;
     top: -8px;
-    left: 16px;
+    inset-inline-start: 16px;
     color: var(--ion-text-color);
     background: var(--ion-background-color);
     padding: 0 4px;
@@ -210,6 +210,7 @@
   input {
     width: 100%;
     padding: 16px;
+    padding-inline-start: 46px;
     border: 1.5px solid var(--ion-text-color);
     border-radius: 8px;
     background: var(--ion-background-color);
