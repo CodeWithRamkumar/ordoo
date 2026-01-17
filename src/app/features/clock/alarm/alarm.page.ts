@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonIcon, IonToggle, IonInput, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonIcon, IonToggle, IonInput, IonSelect, IonSelectOption, AlertController, ModalController } from '@ionic/angular/standalone';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { addIcons } from 'ionicons';
 import { add, alarm, trash, pencil, checkmark, close, time, notifications } from 'ionicons/icons';
+import { AlarmModalComponent } from './alarm-modal.component';
 
 interface Alarm {
   id: string;
@@ -20,8 +21,7 @@ interface Alarm {
   templateUrl: './alarm.page.html',
   styleUrls: ['./alarm.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonButton, IonIcon, IonToggle, IonInput, IonSelect, IonSelectOption],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [CommonModule, FormsModule, IonContent, IonButton, IonIcon, IonToggle, IonInput, IonSelect, IonSelectOption]
 })
 export class AlarmPage implements OnInit, OnDestroy {
   alarms: Alarm[] = [];
@@ -62,8 +62,9 @@ export class AlarmPage implements OnInit, OnDestroy {
 
   private alarmTimeouts: Map<string, any> = new Map();
   private audio: HTMLAudioElement | null = null;
+  private isAlarmActive = false;
 
-  constructor(private headerService: HeaderService) {
+  constructor(private headerService: HeaderService, private alertController: AlertController, private modalController: ModalController) {
     addIcons({ add, alarm, trash, pencil, checkmark, close, time, notifications });
     this.loadAlarms();
   }
@@ -78,6 +79,7 @@ export class AlarmPage implements OnInit, OnDestroy {
       showMenu: true,
       backNavigationUrl: '/workspace/clock'
     });
+    this.requestNotificationPermission();
   }
 
   ngOnDestroy() {
@@ -139,7 +141,7 @@ export class AlarmPage implements OnInit, OnDestroy {
     if (this.editingAlarm) {
       const index = this.alarms.findIndex(a => a.id === this.editingAlarm!.id);
       if (index !== -1) {
-        this.alarms[index] = { ...this.newAlarm };
+        this.alarms[index] = { ...this.newAlarm, isActive: true };
         this.scheduleAlarm(this.alarms[index]);
       }
     } else {
@@ -239,40 +241,95 @@ export class AlarmPage implements OnInit, OnDestroy {
     return repeatDays.includes(dayKey);
   }
 
-  private triggerAlarm(alarm: Alarm) {
-    this.playAlarmSound();
+  private async triggerAlarm(alarm: Alarm) {
+    // Prevent multiple alarms at the same time
+    if (this.isAlarmActive) return;
+    this.isAlarmActive = true;
     
-    // Show notification if supported
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(`Alarm: ${alarm.label}`, {
-        body: `Time: ${alarm.time}`,
-        icon: '/assets/icon/favicon.png'
-      });
+    this.playAlarmSound(alarm.sound);
+    
+    // Vibrate on mobile
+    if ('vibrate' in navigator) {
+      navigator.vibrate([200, 100, 200]);
     }
     
-    // Show alert
-    alert(`🔔 Alarm: ${alarm.label}\nTime: ${alarm.time}`);
+    // Show notification on mobile
+    if ('Notification' in window && Notification.permission === 'granted' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      const notification = new Notification(`🔔 ${alarm.label}`, {
+        body: `Time: ${this.formatTime12Hour(alarm.time)}`,
+        icon: '/assets/icon/favicon.png',
+        requireInteraction: true
+      });
+      
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+    }
+    
+    // Show ionic modal
+    const modal = await this.modalController.create({
+      component: AlarmModalComponent,
+      componentProps: {
+        time: this.formatTime12Hour(alarm.time),
+        label: alarm.label,
+        sound: alarm.sound
+      },
+      backdropDismiss: false,
+      cssClass: 'alarm-modal'
+    });
+    
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    
+    // Stop sound
+    if (this.audio) {
+      this.audio.pause();
+      this.audio = null;
+    }
+    
+    this.isAlarmActive = false;
+    
+    // Handle snooze
+    if (data?.snooze) {
+      this.snoozeAlarm(alarm);
+    }
     
     // If it's a one-time alarm (no repeat days), disable it
     if (alarm.repeatDays.length === 0) {
       alarm.isActive = false;
       this.saveAlarms();
+      this.alarms = [...this.alarms];
     }
   }
 
-  private playAlarmSound() {
+  private snoozeAlarm(alarm: Alarm) {
+    // Stop current sound
+    if (this.audio) {
+      this.audio.pause();
+      this.audio = null;
+    }
+    
+    // Schedule alarm for 1 minute later
+    const timeoutId = setTimeout(() => {
+      this.triggerAlarm(alarm);
+    }, 1 * 60 * 1000);
+    
+    this.alarmTimeouts.set(`snooze-${alarm.id}`, timeoutId);
+  }
+
+  private playAlarmSound(sound: string) {
     try {
-      this.audio = new Audio('/assets/sounds/alarm.mp3');
-      this.audio.loop = true;
-      this.audio.play();
+      const soundMap: { [key: string]: string } = {
+        'default': 'https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3',
+        'gentle': 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
+        'classic': 'https://assets.mixkit.co/active_storage/sfx/2860/2860-preview.mp3',
+        'digital': 'https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3'
+      };
       
-      // Stop after 30 seconds
-      setTimeout(() => {
-        if (this.audio) {
-          this.audio.pause();
-          this.audio = null;
-        }
-      }, 30000);
+      this.audio = new Audio(soundMap[sound] || soundMap['default']);
+      this.audio.loop = true;
+      this.audio.play().catch(err => console.error('Audio play failed:', err));
     } catch (error) {
       console.error('Error playing alarm sound:', error);
     }
@@ -298,12 +355,24 @@ export class AlarmPage implements OnInit, OnDestroy {
   private loadAlarms() {
     const saved = localStorage.getItem('ordoo-alarms');
     if (saved) {
-      this.alarms = JSON.parse(saved);
+      const loadedAlarms = JSON.parse(saved);
+      
+      // Remove duplicates based on time
+      const uniqueAlarms = loadedAlarms.filter((alarm: Alarm, index: number, self: Alarm[]) => 
+        index === self.findIndex(a => a.time === alarm.time)
+      );
+      
+      this.alarms = uniqueAlarms;
       this.alarms.forEach(alarm => {
         if (alarm.isActive) {
           this.scheduleAlarm(alarm);
         }
       });
+      
+      // Save cleaned alarms back
+      if (loadedAlarms.length !== uniqueAlarms.length) {
+        this.saveAlarms();
+      }
     }
   }
 
@@ -323,9 +392,13 @@ export class AlarmPage implements OnInit, OnDestroy {
     this.selectedPeriod = 'AM';
   }
 
-  requestNotificationPermission() {
+  private requestNotificationPermission() {
     if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted');
+        }
+      });
     }
   }
 }
