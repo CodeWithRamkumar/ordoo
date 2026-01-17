@@ -50,8 +50,6 @@ export class WorkspaceCardsComponent implements OnInit {
   ngOnInit() { }
 
   navigateToRoute(route: string) {
-    console.log(route);
-
     this.navCtrl.navigateRoot(route);
   }
 }

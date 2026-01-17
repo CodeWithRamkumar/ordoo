@@ -48,18 +48,33 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   async loadUserProfile() {
-    const userData = await this.authService.getUserData();
-    console.log('Menu - User data:', userData);
-    
-    if (userData.user) {
+    try {
+      await this.authService.init(); // Ensure storage is ready
+      const userData = await this.authService.getUserData();
+      console.log('Menu - User data:', userData);
+      
+      if (userData && userData.user) {
+        this.userProfile = {
+          name: userData.profile?.full_name || userData.user.email || 'User',
+          email: userData.user.email || 'No email',
+          image: userData.profile?.avatar_url || 'assets/icon/default-avatar.svg'
+        };
+        console.log('Menu - Updated profile:', this.userProfile);
+      } else {
+        console.log('Menu - No user data found, using defaults');
+        this.userProfile = {
+          name: 'Guest User',
+          email: 'guest@example.com',
+          image: 'assets/icon/ordoo-logo.svg'
+        };
+      }
+    } catch (error) {
+      console.error('Menu - Error loading user profile:', error);
       this.userProfile = {
-        name: userData.profile?.full_name || userData.user.email || 'User',
-        email: userData.user.email || 'No email',
-        image: userData.profile?.avatar_url || 'assets/icon/default-avatar.svg'
+        name: 'Error Loading',
+        email: 'error@example.com',
+        image: 'assets/icon/ordoo-logo.svg'
       };
-      console.log('Menu - Updated profile:', this.userProfile);
-    } else {
-      console.log('Menu - No user data found');
     }
   }
 

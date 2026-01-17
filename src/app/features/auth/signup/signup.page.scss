@@ -80,15 +80,15 @@
 }
 
 .logo-circle {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   background: var(--ion-white-color-background);
   border-radius: var(--border-radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--spacing-md);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+   box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.3);
 }
 
 .logo-icon {

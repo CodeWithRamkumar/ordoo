@@ -30,7 +30,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           if (error.status === 401) {
             authService.clearUserData();
             errorService.showError('Session expired. Please login again.');
-            window.location.href = 'http://localhost:8101/';
             return throwError(() => new Error('Session expired'));
           }
 

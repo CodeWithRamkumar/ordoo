@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
   private isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  private isMobile = Capacitor.isNativePlatform();
   
-  readonly API_BASE_URL = this.isLocal ? 'http://localhost:3001/api' : 'https://ordoo-api.onrender.com/api';
+  readonly API_BASE_URL = this.isMobile ? 'https://ordoo-api.onrender.com/api' : 
+                         this.isLocal ? 'http://localhost:3001/api' : 'https://ordoo-api.onrender.com/api';
   
   // API Endpoints
   readonly AUTH = {
@@ -23,5 +26,13 @@ export class ConfigService {
 
   get isLocalEnvironment(): boolean {
     return this.isLocal;
+  }
+
+  get isMobileApp(): boolean {
+    return this.isMobile;
+  }
+
+  get currentPlatform(): string {
+    return Capacitor.getPlatform();
   }
 }

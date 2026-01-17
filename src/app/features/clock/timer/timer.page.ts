@@ -78,9 +78,9 @@ export class TimerPage implements OnInit, OnDestroy {
     if (field === 'hours') {
       this.modalHours = Math.max(0, Math.min(99, this.modalHours || 0));
     } else if (field === 'minutes') {
-      this.modalMinutes = Math.max(0, Math.min(59, this.modalMinutes || 0));
+      this.modalMinutes = Math.max(0, Math.min(99, this.modalMinutes || 0));
     } else if (field === 'seconds') {
-      this.modalSeconds = Math.max(0, Math.min(59, this.modalSeconds || 0));
+      this.modalSeconds = Math.max(0, Math.min(99, this.modalSeconds || 0));
     }
   }
 
@@ -101,9 +101,9 @@ export class TimerPage implements OnInit, OnDestroy {
     if (field === 'hours') {
       this.modalHours = Math.min(99, numValue);
     } else if (field === 'minutes') {
-      this.modalMinutes = Math.min(59, numValue);
+      this.modalMinutes = Math.min(99, numValue);
     } else if (field === 'seconds') {
-      this.modalSeconds = Math.min(59, numValue);
+      this.modalSeconds = Math.min(99, numValue);
     }
   }
 
