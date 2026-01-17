@@ -10,4 +10,65 @@
       </ion-card>
     </div>
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Add World Clock</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="modal-content">
+        <div class="selector-container">
+          <div class="select-group">
+            <label class="select-label">Country</label>
+            <app-dropdown
+              [filterDetails]="countryFilterDetails"
+              (emitSelectedValues)="onCountryChange($event)">
+            </app-dropdown>
+          </div>
+
+          @if (selectedCountry) {
+            <div class="select-group">
+              <label class="select-label">City</label>
+              <app-dropdown
+                [filterDetails]="cityFilterDetails"
+                (emitSelectedValues)="onCityChange($event)">
+              </app-dropdown>
+            </div>
+          }
+
+          @if (selectedCity) {
+            <div class="select-group">
+              <label class="select-label">Custom Label</label>
+              <input 
+                type="text" 
+                class="custom-input" 
+                [(ngModel)]="customLabel" 
+                placeholder="Enter custom label">
+            </div>
+          }
+
+          @if (selectedCity && customLabel) {
+            <button 
+              class="add-button" 
+              (click)="addClock()">
+              Add Clock
+            </button>
+          }
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

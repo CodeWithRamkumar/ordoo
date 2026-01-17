@@ -196,7 +196,7 @@
   position: relative;
   
   .floating-label {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     position: absolute;
     top: -8px;
     inset-inline-start: 16px;
@@ -215,7 +215,7 @@
     border-radius: 8px;
     background: var(--ion-background-color);
     color: var(--ion-text-color);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     cursor: pointer;
     box-sizing: border-box;
     transition: all 0.2s ease;
@@ -304,6 +304,6 @@ ion-content {
   }
   
   .breakdown-value {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
   }
 }

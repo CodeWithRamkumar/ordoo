@@ -1,0 +1,177 @@
+.ordoo-dropdown-search {
+    width: 100%;
+    height: 40px;
+    line-height: 24px;
+    border: 1px solid var(--ion-text-color);
+    border-radius: 6px;
+    outline: none;
+    color: var(--ion-text-color);
+    background: var(--ion-background-color);
+    padding: 0 12px;
+}
+
+.ordooMutipleDropDownFotter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+
+    .ordooMutipleDropDownCancelApply {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    .ordooMutipleDropDownLink {
+        color: var(--ion-color-primary) !important;
+        font-size: 14px;
+    }
+}
+
+.ordooDropDownCheckBoxTextGroup,
+.ordooDropDownCheckBoxTextLabel {
+    margin-inline-start: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+.ordoo-drop-down-label {
+    background: var(--ion-background-color);
+    z-index: 99999;
+    position: absolute;
+    font-size: 0.75em;
+    padding: 0 0.333334em;
+    top: -8px;
+    left: 16px;
+    color: var(--ion-text-color);
+}
+
+.ordooDropDownComponentMainDiv {
+    position: relative;
+}
+
+::ng-deep .ng-select {
+    .ng-select-container {
+        display: flex;
+        align-items: center;
+        min-height: 50px;
+        border: 1px solid var(--ion-text-color);
+        border-radius: 8px;
+        
+        .ng-value-container {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            flex-wrap: nowrap !important;
+            gap: 4px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            
+            .ng-value {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                
+                .ng-value-label {
+                    font-size: 14px;
+                    line-height: 1;
+                    color: var(--ion-text-color);
+                }
+            }
+        }
+        
+        &.ng-select-multiple .ng-value-container {
+            .ng-value {
+                background-color: var(--ion-color-light);
+                border: 1px solid var(--ion-color-medium);
+                border-radius: 16px;
+                padding: 6px 12px;
+                margin: 2px 0;
+                
+                .ng-value-label {
+                    font-weight: 500;
+                }
+                
+                .ng-value-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 8px;
+                    cursor: pointer;
+                    line-height: 1;
+                    color: var(--ion-color-medium);
+                    font-size: 16px;
+                    
+                    &:hover {
+                        color: var(--ion-color-danger);
+                    }
+                }
+            }
+            
+            .ng-placeholder {
+                color: var(--ion-color-medium);
+            }
+        }
+        
+        .ng-arrow-wrapper {
+            padding-right: 8px;
+            
+            .ng-arrow {
+                border-color: var(--ion-text-color) transparent transparent;
+                border-style: solid;
+                border-width: 5px 5px 2.5px;
+            }
+        }
+    }
+    
+    &.ng-select-opened .ng-select-container .ng-arrow-wrapper .ng-arrow {
+        border-color: transparent transparent var(--ion-text-color);
+        border-width: 0 5px 5px;
+    }
+    
+    &.ng-select-focused .ng-select-container {
+        border-color: var(--ion-color-primary);
+        box-shadow: 0 0 0 1px var(--ion-color-primary);
+    }
+    
+    .ng-has-value .ng-placeholder {
+        display: none;
+    }
+}
+
+::ng-deep .ng-dropdown-panel {
+    border: 1px solid var(--ion-text-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background: var(--ion-background-color);
+    
+    .ng-dropdown-panel-items {
+        .ng-option {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            color: var(--ion-text-color);
+            
+            // &.ng-option-selected {
+            //     background-color: var(--ion-color-light);
+            // }
+            
+            // &.ng-option-marked {
+            //     background-color: var(--ion-color-light);
+            // }
+        }
+    }
+}

@@ -58,7 +58,7 @@ export class AgeCalculatorPage implements OnInit, AfterViewInit, OnDestroy {
 
   private initializeDatepickers() {
     $(this.birthDateInput.nativeElement).datepicker({
-      format: 'mm/dd/yyyy',
+      format: 'M d, yyyy',
       autoclose: true,
       todayHighlight: true,
       minViewMode: 0,
@@ -70,7 +70,7 @@ export class AgeCalculatorPage implements OnInit, AfterViewInit, OnDestroy {
     });
     
     $(this.targetDateInput.nativeElement).datepicker({
-      format: 'mm/dd/yyyy',
+      format: 'M d, yyyy',
       autoclose: true,
       todayHighlight: true,
       minViewMode: 0,

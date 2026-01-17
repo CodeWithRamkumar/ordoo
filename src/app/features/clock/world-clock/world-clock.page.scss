@@ -22,7 +22,7 @@
   background: var(--ion-card-background);
   border-radius: var(--border-radius-lg);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--ion-color-light-shade);
+  border: 1px solid var(--ion-text-color);
   margin: 0;
   flex: 0 1 280px;
   min-width: 280px;
@@ -77,4 +77,188 @@ ion-card-content {
   .city-name {
     font-size: var(--font-size-lg);
   }
+}
+
+ion-fab-button {
+  --background: var(--ion-color-primary);
+  --color: white;
+}
+
+// Modal Styles
+.modal-content {
+  --background: var(--ion-background-color);
+}
+
+.selector-container {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.select-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.select-label {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--ion-text-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.custom-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--ion-text-color);
+  border-radius: var(--border-radius-md);
+  background: var(--ion-card-background);
+  color: var(--ion-text-color);
+  font-size: var(--font-size-base);
+  font-family: var(--ion-font-family);
+  min-height: 50px;
+  
+  &:focus {
+    outline: none;
+    border-color: var(--ion-color-primary);
+  }
+}
+
+.add-button {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--ion-color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+ion-modal {
+  --border-radius: var(--border-radius-lg);
+  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+// Modal Styles
+.modal-content {
+  --background: var(--ion-background-color);
+}
+
+.timezone-list {
+  background: transparent;
+  padding: 0;
+}
+
+.timezone-item {
+  --background: var(--ion-card-background);
+  --border-color: var(--ion-text-color);
+  --padding-start: var(--spacing-md);
+  --padding-end: var(--spacing-md);
+  --inner-padding-end: 0;
+  margin: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--ion-text-color);
+  transition: all 0.2s ease;
+
+  &:hover {
+    --background: var(--ion-color-light);
+    transform: translateX(4px);
+  }
+}
+
+.city-label {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--ion-text-color);
+  margin-bottom: 4px;
+}
+
+.country-label {
+  font-size: var(--font-size-sm);
+  color: var(--ion-color-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3xl);
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 64px;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+  }
+
+  p {
+    font-size: var(--font-size-lg);
+    margin: 0;
+  }
+}
+
+ion-modal {
+  --border-radius: var(--border-radius-lg);
+  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+ion-searchbar {
+  --background: var(--ion-card-background);
+  --border-radius: var(--border-radius-md);
+  --box-shadow: none;
+  --icon-color: var(--ion-color-medium);
+  --placeholder-color: var(--ion-color-medium);
+  --color: var(--ion-text-color);
+  padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.custom-label-section {
+  padding: var(--spacing-md);
+  background: var(--ion-color-light);
+  border-bottom: 1px solid var(--ion-text-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.custom-input-item {
+  --background: var(--ion-card-background);
+  --border-radius: var(--border-radius-md);
+  --padding-start: var(--spacing-sm);
+  --padding-end: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.custom-input {
+  --padding-start: var(--spacing-xs);
+  --padding-end: var(--spacing-xs);
+  font-size: var(--font-size-base);
+}
+
+.add-button {
+  --background: var(--ion-color-primary);
+  --border-radius: var(--border-radius-md);
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.timezone-item.selected {
+  --background: var(--ion-color-primary-tint);
+  border-color: var(--ion-color-primary);
 }

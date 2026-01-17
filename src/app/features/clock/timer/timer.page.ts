@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonInput,IonIcon, IonModal, IonHeader, IonToolbar, IonTitle, ModalController } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonInput,IonIcon, IonModal, IonHeader, IonToolbar, IonTitle, Platform, AlertController } from '@ionic/angular/standalone';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { addIcons } from 'ionicons';
 import { play, pause, refresh, stop, add , timerOutline} from 'ionicons/icons';
+import { LocalNotifications, ActionPerformed } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-timer',
@@ -29,12 +30,17 @@ export class TimerPage implements OnInit, OnDestroy {
   modalMinutes: number | null = null;
   modalSeconds: number | null = null;
   private interval: any;
+  private audio: HTMLAudioElement | null = null;
 
-  constructor(private headerService: HeaderService) {
+  constructor(
+    private headerService: HeaderService,
+    private platform: Platform,
+    private alertController: AlertController
+  ) {
     addIcons({ play, pause, refresh, stop, add, timerOutline });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.headerService.updateHeaderData({
       title: 'Timer',
       subtitle: 'Countdown timer',
@@ -44,10 +50,36 @@ export class TimerPage implements OnInit, OnDestroy {
       showMenu: true,
       backNavigationUrl: '/workspace/clock'
     });
+
+    if (this.platform.is('capacitor')) {
+      await LocalNotifications.requestPermissions();
+      
+      await LocalNotifications.registerActionTypes({
+        types: [
+          {
+            id: 'TIMER_ACTIONS',
+            actions: [
+              {
+                id: 'dismiss',
+                title: 'Dismiss'
+              }
+            ]
+          }
+        ]
+      });
+
+      LocalNotifications.addListener('localNotificationActionPerformed', (action: ActionPerformed) => {
+        this.clear();
+      });
+    }
   }
 
   ngOnDestroy() {
     if (this.interval) clearInterval(this.interval);
+    this.stopSound();
+    if (this.platform.is('capacitor')) {
+      LocalNotifications.removeAllListeners();
+    }
   }
 
   setTimerFromInputs() {
@@ -70,6 +102,9 @@ export class TimerPage implements OnInit, OnDestroy {
     const seconds = this.modalSeconds || 0;
     if (hours > 0 || minutes > 0 || seconds > 0) {
       this.setTimer(hours, minutes, seconds);
+      this.modalHours = null;
+      this.modalMinutes = null;
+      this.modalSeconds = null;
       this.closeModal();
     }
   }
@@ -157,14 +192,64 @@ export class TimerPage implements OnInit, OnDestroy {
     this.isFinished = false;
     this.display = '00:00';
     this.dashOffset = this.circumference;
+    this.stopSound();
   }
 
-  private finish() {
+  private async finish() {
     this.isRunning = false;
     this.isFinished = true;
     this.remainingTime = 0;
     this.updateDisplay();
     if (this.interval) clearInterval(this.interval);
+    
+    this.playSound();
+    await this.showNotification();
+  }
+
+  private playSound() {
+    this.audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGGS57OihUBELTKXh8bllHAU2jdXvzn0pBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUuhM/z24k2CBdju+zooVARC0yl4fG5ZRwFNo3V7859KQUofsz');
+    this.audio.loop = true;
+    this.audio.play().catch(e => console.log('Audio play failed:', e));
+  }
+
+  private stopSound() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio = null;
+    }
+  }
+
+  private async showNotification() {
+    if (this.platform.is('capacitor')) {
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: 'Timer Complete!',
+            body: 'Your countdown timer has finished.',
+            id: 1,
+            sound: 'default',
+            actionTypeId: 'TIMER_ACTIONS',
+            extra: null,
+            ongoing: true
+          }
+        ]
+      });
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Timer Complete!',
+        message: 'Your countdown timer has finished.',
+        buttons: [
+          {
+            text: 'Dismiss',
+            handler: () => {
+              this.clear();
+            }
+          }
+        ],
+        backdropDismiss: false
+      });
+      await alert.present();
+    }
   }
 
   private updateDisplay() {
@@ -178,7 +263,6 @@ export class TimerPage implements OnInit, OnDestroy {
       this.display = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
     
-    // Update progress ring - fill as time counts down
     if (this.totalTime > 0) {
       const progress = (this.totalTime - this.remainingTime) / this.totalTime;
       this.dashOffset = this.circumference - (progress * this.circumference);

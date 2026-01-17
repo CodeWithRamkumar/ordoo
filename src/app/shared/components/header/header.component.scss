@@ -2,6 +2,13 @@ ion-icon {
   cursor: pointer;
 }
 
+ion-header {
+  ion-toolbar {
+    --padding-top: env(safe-area-inset-top);
+    --padding-bottom: 0;
+  }
+}
+
 .header-content {
   --padding-start: var(--spacing-sm);
   --padding-end: var(--spacing-sm);

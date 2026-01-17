@@ -1,0 +1,82 @@
+<div #triggerWrapper class="ordooDropDownComponentMainDiv">
+  <span class="ordoo-drop-down-label" *ngIf="filterDetails?.labelText">{{filterDetails?.labelText}}</span>
+
+  <ng-select class="ordooDropDownComponent cp" [clearable]="false"
+  bindValue="value" bindLabel="label"
+  [items]="filterDetails?.dropDownList" 
+  [multiple]="filterDetails?.dropDownType === 'multiple'" 
+  [searchable]="false" 
+  [searchFn]="customSearchFn"
+  [groupBy]="filterDetails?.groupingEnable ? filterDetails?.groupByText : null"
+  [selectableGroup]="filterDetails?.groupingEnable ? filterDetails?.dropDownType === 'multiple' : null"
+  [selectableGroupAsModel]="filterDetails?.groupingEnable ? filterDetails?.dropDownType !== 'multiple' : null"
+  [closeOnSelect]="filterDetails?.dropDownType !== 'multiple'" 
+  [selectOnTab]="false" 
+  [placeholder]="filterDetails?.placeHolder || ''" 
+  [clearOnBackspace]="false" 
+  [(ngModel)]="filterDetails.dropDownSelectedList"
+  #ordooDropDown 
+  (open)="onDropdownOpen()" 
+  (close)="onDropdownClose()">
+  
+  <ng-template ng-header-tmp *ngIf="filterDetails?.isSearchEnable">
+    <div style="padding: 8px 12px;">
+      <input type="text" class="ordoo-dropdown-search" placeholder="Type to filter"
+        (keydown.enter)="preventSearchEnter($any($event))" 
+        (input)="ordooDropDown.filter($event.target.value)" />
+    </div>
+  </ng-template>
+
+  <ng-template ng-optgroup-tmp let-item="item" *ngIf="filterDetails?.groupingEnable">
+    <span class="ordooDropDownCheckBoxTextGroup">
+      {{ item[filterDetails?.groupByText] }}
+    </span>
+  </ng-template>
+
+  <ng-template ng-option-tmp let-item="item" let-item$="item$">
+    <div style="display: flex; align-items: flex-start; gap: 8px; width: 100%;">
+      <span style="color: var(--ion-color-primary); flex-shrink: 0; width: 16px;">
+        <span *ngIf="item$.selected">✓</span>
+      </span>
+      <span class="ordooDropDownCheckBoxTextLabel" style="flex: 1; word-wrap: break-word;">
+        {{ item.label }}
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template ng-label-tmp let-item="item">
+    <span *ngIf="filterDetails?.groupingEnable && item[filterDetails?.groupByText]">
+      {{ item[filterDetails?.groupByText] }} - {{ item.label }}
+    </span>
+    <span *ngIf="!filterDetails?.groupingEnable || !item[filterDetails?.groupByText]">
+      {{ item.label }}
+    </span>
+  </ng-template>
+
+  <ng-template ng-footer-tmp *ngIf="filterDetails?.dropDownType === 'multiple'">
+    <div class="ordooMutipleDropDownFotter">
+      <div class="mutipleGroupDropDownSelectUnselectAll">
+        <span class="ordooMutipleDropDownLink cp" 
+          *ngIf="filterDetails.dropDownSelectedList?.length !== filterDetails?.dropDownList?.length"
+          (click)="onSelectAll()">
+          Select all
+        </span>
+        <span class="ordooMutipleDropDownLink cp" 
+          *ngIf="filterDetails.dropDownSelectedList?.length === filterDetails?.dropDownList?.length"
+          (click)="onUnSelectAll()">
+          Unselect all
+        </span>
+      </div>
+      <div class="ordooMutipleDropDownCancelApply">
+        <span class="ordooMutipleDropDownLink cp" (click)="onCancel()">
+          Cancel
+        </span>
+        <span class="ordooMutipleDropDownLink cp" (click)="onApply()">
+          Apply
+        </span>
+      </div>
+    </div>
+  </ng-template>
+
+  </ng-select>
+</div>
